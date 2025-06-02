@@ -99,3 +99,19 @@ resource "aws_ec2_transit_gateway_peering_attachment_accepter" "example4" {
 provider = aws.us-west-1
   
 }
+
+# Route 1: VPC01 → 0.0.0.0/0 → TGW01
+resource "aws_route" "route_1" {
+  route_table_id         = data.terraform_remote_state.remote_outputs_1.outputs.Main_RT_ID_Parent_01
+  destination_cidr_block = "0.0.0.0/0"
+  transit_gateway_id     = data.terraform_remote_state.remote_outputs_3.outputs.TGW_ID_Parent 
+}
+
+
+# Route 2: VPC02 → 0.0.0.0/0 → TGW02
+resource "aws_route" "route_2" {
+  route_table_id         = data.terraform_remote_state.remote_outputs_1.outputs.Main_RT_ID_Parent_02
+  destination_cidr_block = "0.0.0.0/0"
+  transit_gateway_id     = data.terraform_remote_state.remote_outputs_3.outputs.TGW_ID_Parent_2
+  provider = aws.us-west-1
+}
