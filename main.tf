@@ -49,7 +49,7 @@ resource "aws_dx_gateway_association" "secondary" {
   dx_gateway_id                  = data.terraform_remote_state.remote_outputs_2.outputs.Dx_Gateway_ID_02 
   associated_gateway_id          = data.terraform_remote_state.remote_outputs_3.outputs.TGW_ID_Parent_2                                                     
   allowed_prefixes = var.prefixes_from_onprem
-  provider = aws.us-west-1
+  provider = aws.ap-east-1
 }
 
 # this is to attach TGW01 to VPC01 
@@ -69,7 +69,7 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "TGW_to_VPC_2" {
   subnet_ids         = [data.terraform_remote_state.remote_outputs_1.outputs.Subnet_ID_Parent_02]
   transit_gateway_id = data.terraform_remote_state.remote_outputs_3.outputs.TGW_ID_Parent_2 
   vpc_id             = data.terraform_remote_state.remote_outputs_1.outputs.VPC_ID_Parent_02
-  provider = aws.us-west-1
+  provider = aws.ap-east-1
   tags = { 
     Name = var.attachment_name2
  }
@@ -96,7 +96,7 @@ resource "aws_ec2_transit_gateway_peering_attachment_accepter" "example4" {
     Name = "TGW Peering Attachment Accepter"
   }
 
-provider = aws.us-west-1
+provider = aws.ap-east-1
   
 }
 
@@ -113,5 +113,5 @@ resource "aws_route" "route_2" {
   route_table_id         = data.terraform_remote_state.remote_outputs_1.outputs.Main_RT_ID_Parent_02
   destination_cidr_block = "0.0.0.0/0"
   transit_gateway_id     = data.terraform_remote_state.remote_outputs_3.outputs.TGW_ID_Parent_2
-  provider = aws.us-west-1
+  provider = aws.ap-east-1
 }
